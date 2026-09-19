@@ -28,7 +28,7 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 	int speed = 30;
 	
 	// 1. Declare a Timer variable, but do not initialize it.
-
+	Timer timer;
 
 	public static void main(String[] args) {
 		IntroToTimers tg = new IntroToTimers();
@@ -44,11 +44,13 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 		frame.addKeyListener(this);
 		
 		// 2. Set the time variable to maxTime
-
+		timer.setLogTimers(isMaximumSizeSet());
+		
 		// 3. Initialize timer to a new Timer object. For the first argument, use 1000/speed. For the second argument, use this
-
+		timer = new Timer(1000, this);
 		// 11. Run it! Notice how it doesn't update? That's because our timer isn't triggering the actionPerformed() method yet!
 		// 12. Make the timer start!
+		timer.addActionListener(null);
 
 		// 13. Run the program. Is it possible for you to win? 
 		// 14. Figure out how to make it harder or easier! (Which condition is most related to whether you win or not?)
@@ -57,9 +59,11 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// 8. Decrement time
-
+		time -=1;
 		// 9. if time is less than or equal to 2...
-
+		if(time < 3) {
+			time = maxTime;
+		}
 			// 10. Set time equal to maxTime
 
 		
@@ -71,10 +75,16 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 		int keyCode = e.getKeyCode();
 		
 		// 4. if keyCode is 32 (that's the spacebar key!)...
-
+		if(keyCode == 32) {
+			
+		}
 
 			// 5. if time is less than 2...
-
+		if(time < 2) {
+			JOptionPane.showMessageDialog(null, "You win");
+		}else {
+			time = maxTime;
+		}
 				// 6. Tell them they win!
 
 			
