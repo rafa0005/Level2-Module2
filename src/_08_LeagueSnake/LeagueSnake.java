@@ -14,8 +14,10 @@ public class LeagueSnake extends PApplet {
     	Segment head;
     	int foodX;
     	int foodY;
-    	
-    
+    	int direction = UP;
+    	int foodEaten = 0;
+    	int headX;
+    	int headY;
     /*
      * Setup methods
      * 
@@ -49,6 +51,7 @@ public class LeagueSnake extends PApplet {
     public void draw() {
         background(205, 230, 0, 200);
         drawFood();
+        move();
         drawSnake();
     }
 
@@ -62,7 +65,7 @@ public class LeagueSnake extends PApplet {
     void drawSnake() {
         // Draw the head of the snake followed by its tail
     	fill(0, 255, 70, 200);
-    	 rect(250, 250, 10, 10);
+    	 rect(headX, headY, 10, 10);
     }
 
     void drawTail() {
@@ -93,16 +96,30 @@ public class LeagueSnake extends PApplet {
      * 
      * These methods are used to change what is happening to the snake
      */
+    
 
     @Override
     public void keyPressed() {
         // Set the direction of the snake according to the arrow keys pressed
-        
+        direction = keyCode;
     }
 
     void move() {
         // Change the location of the Snake head based on the direction it is moving.
-
+    	if(direction == UP) {
+    		headY -=5;
+    	}
+    	else if(direction == DOWN) {
+    		headY +=5;
+    	}
+    	else if(direction == LEFT) {
+    		headX -=5;
+    	}
+    	else if(direction == RIGHT) {
+    		headX +=5;
+    	}
+    	checkBoundaries();
+    	
         /*
         if (direction == UP) {
             // Move head up
@@ -120,13 +137,27 @@ public class LeagueSnake extends PApplet {
 
     void checkBoundaries() {
         // If the snake leaves the frame, make it reappear on the other side
-        
+        if(headX > 500) {
+        	headX = 0;
+        }
+        if(headX < 0) {
+        	headX = 500;
+        }
+        if(headY < 0) {
+        	headY = 500;
+        }
+        if(headX > 500) {
+        	headX = 0;
+        }
     }
 
     void eat() {
         // When the snake eats the food, its tail should grow and more
         // food appear
-        
+        if(headX == foodX && headY == foodY) {
+        	foodEaten +=1;
+        	drawFood();
+        }
     }
 
     static public void main(String[] passedArgs) {
