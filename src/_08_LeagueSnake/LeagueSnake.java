@@ -1,5 +1,7 @@
 package _08_LeagueSnake;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 public class LeagueSnake extends PApplet {
@@ -18,6 +20,9 @@ public class LeagueSnake extends PApplet {
     	int foodEaten = 0;
     	int headX;
     	int headY;
+    	
+    	ArrayList<Segment> tailPieces = new ArrayList<Segment>();
+    	
     /*
      * Setup methods
      * 
@@ -31,7 +36,7 @@ public class LeagueSnake extends PApplet {
     @Override
     public void setup() {
         head = new Segment(10, 10);
-        frameRate(20);
+        frameRate(16);
         dropFood();
     }
 
@@ -53,6 +58,7 @@ public class LeagueSnake extends PApplet {
         drawFood();
         move();
         drawSnake();
+        eat();
     }
 
     void drawFood() {
@@ -70,7 +76,9 @@ public class LeagueSnake extends PApplet {
 
     void drawTail() {
         // Draw each segment of the tail
-        
+    	for(Segment s : tailPieces){
+			rect(s.x, s.y, 10, 10);
+		}
     }
 
     /*
@@ -83,6 +91,8 @@ public class LeagueSnake extends PApplet {
         // After drawing the tail, add a new segment at the "start" of the tail and
         // remove the one at the "end"
         // This produces the illusion of the snake tail moving.
+    	checkTailCollision();
+    	drawTail();
 
     }
 
@@ -107,16 +117,16 @@ public class LeagueSnake extends PApplet {
     void move() {
         // Change the location of the Snake head based on the direction it is moving.
     	if(direction == UP) {
-    		headY -=5;
+    		headY -=10;
     	}
     	else if(direction == DOWN) {
-    		headY +=5;
+    		headY +=10;
     	}
     	else if(direction == LEFT) {
-    		headX -=5;
+    		headX -=10;
     	}
     	else if(direction == RIGHT) {
-    		headX +=5;
+    		headX +=10;
     	}
     	checkBoundaries();
     	
@@ -146,8 +156,8 @@ public class LeagueSnake extends PApplet {
         if(headY < 0) {
         	headY = 500;
         }
-        if(headX > 500) {
-        	headX = 0;
+        if(headY > 500) {
+        	headY = 0;
         }
     }
 
@@ -156,8 +166,10 @@ public class LeagueSnake extends PApplet {
         // food appear
         if(headX == foodX && headY == foodY) {
         	foodEaten +=1;
-        	drawFood();
+        	dropFood();
+        	
         }
+        
     }
 
     static public void main(String[] passedArgs) {
