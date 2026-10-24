@@ -100,15 +100,20 @@ public class LeagueSnake extends PApplet {
 
     void checkTailCollision() {
         // If the snake crosses its own tail, shrink the tail back to one segment
-       for(Segment seg: tailPieces) {
+    	boolean collision = false;
+       for(int i = 0; i < tailPieces.size(); i++) {
+    	   Segment seg = tailPieces.get(i);
     	  if(seg.x == head.x && seg.y == head.y) {
-    		foodEaten = 1;
-    		ArrayList<Segment> tail = new ArrayList<Segment>();
-    		tail.add(seg);
+    		foodEaten = 0;
+    		collision = true;
+    		break;
     	  }
     	  
+    	  
        }
-    	   
+    	   if(collision == true) {
+    		   tailPieces = new ArrayList<>();
+    	   }
     	   
        }
     
